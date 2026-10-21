@@ -1,0 +1,26 @@
+---
+import Button from "../components/Button.astro";
+import Card from "../components/Card.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const nombre = "juan";
+const hobbiesJuan = ["Dormir", "Salir", "Entrenar", "Jugar"];
+
+const hobbies = ["Tirar del pelo", "Retocarse la cara", "Jugar"];
+---
+
+<BaseLayout>
+  <h1>Mi primera página de astro</h1>
+  <p>Yo me llamo {nombre}</p>
+  <p>Mis hobbies son:</p>
+  <ul>
+    {hobbiesJuan.map((hobbie) => <li>{hobbie}</li>)}
+  </ul>
+  <Button title="Púlsame">Púlsame</Button>
+  <Card
+    title="Este es Macaco"
+    description="Estos son los hobbies de macaco"
+    img="https://i.pinimg.com/736x/c0/39/6c/c0396cbd3f4276ddaf52d0ba12341ba6.jpg"
+    hobbies={hobbies}
+  />
+</BaseLayout>
