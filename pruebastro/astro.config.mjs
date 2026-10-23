@@ -8,7 +8,9 @@ import react from "@astrojs/react";
 // https://astro.build/config
 export default defineConfig({
   server: {
-    allowedHosts: ["hampton-nylon-marvel-genetic.trycloudflare.com"],
+    allowedHosts: [
+      ".trycloudflare.com", // <-- Esto permite cualquier subdominio temporal de Cloudflare
+    ],
   },
 
   vite: {

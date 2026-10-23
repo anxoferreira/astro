@@ -3,10 +3,10 @@ import Button from "../components/Button.astro";
 import Card from "../components/Card.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
-const nombre = "juan";
-const hobbiesJuan = ["Dormir", "Salir", "Entrenar", "Jugar"];
+const nombre = "celtics shaq";
+const hobbiesShaq = ["Dormir", "Salir", "Entrenar", "Jugar"];
 
-const hobbies = ["Tirar del pelo", "Retocarse la cara", "Jugar"];
+const hobbies = ["fallar tiros libres", "estarmwashed", "Jugar"];
 ---
 
 <BaseLayout>
@@ -14,13 +14,15 @@ const hobbies = ["Tirar del pelo", "Retocarse la cara", "Jugar"];
   <p>Yo me llamo {nombre}</p>
   <p>Mis hobbies son:</p>
   <ul>
-    {hobbiesJuan.map((hobbie) => <li>{hobbie}</li>)}
+    {hobbiesShaq.map((hobbie) => <li>{hobbie}</li>)}
   </ul>
+
   <Button title="Púlsame">Púlsame</Button>
+
   <Card
-    title="Este es Macaco"
-    description="Estos son los hobbies de macaco"
-    img="https://i.pinimg.com/736x/c0/39/6c/c0396cbd3f4276ddaf52d0ba12341ba6.jpg"
+    title="Este es shaq"
+    description="estoy washed"
+    img="https://d2rbybg5ibx87t.cloudfront.net/images/127849/original.jpg?1397061545"
     hobbies={hobbies}
   />
 </BaseLayout>
