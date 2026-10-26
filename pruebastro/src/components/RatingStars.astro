@@ -1,0 +1,139 @@
+---
+interface Props {
+  postId?: string;
+}
+
+const { postId = "default-post" } = Astro.props;
+---
+
+<div class="rating-container" data-post-id={postId}>
+  <p class="rating-title">¿Qué te ha parecido este post?</p>
+  <div class="stars">
+    <button type="button" class="star" data-value="1" aria-label="1 estrella"
+      >★</button
+    >
+    <button type="button" class="star" data-value="2" aria-label="2 estrellas"
+      >★</button
+    >
+    <button type="button" class="star" data-value="3" aria-label="3 estrellas"
+      >★</button
+    >
+    <button type="button" class="star" data-value="4" aria-label="4 estrellas"
+      >★</button
+    >
+    <button type="button" class="star" data-value="5" aria-label="5 estrellas"
+      >★</button
+    >
+  </div>
+  <span class="rating-feedback"></span>
+</div>
+
+<script>
+  // Lógica del lado del cliente para manejar el rating y localStorage
+  const containers = document.querySelectorAll(".rating-container");
+
+  containers.forEach((container) => {
+    const postId = container.getAttribute("data-post-id") || "default-post";
+    const storageKey = `blog_rating_${postId}`;
+    const stars = container.querySelectorAll(".star");
+    const feedback = container.querySelector(".rating-feedback");
+
+    // Cargar puntuación guardada previamente
+    const savedRating = localStorage.getItem(storageKey);
+    if (savedRating) {
+      updateStars(parseInt(savedRating, 10));
+      if (feedback) feedback.textContent = `Puntuado: ${savedRating}/5`;
+    }
+
+    stars.forEach((star) => {
+      // Evento al hacer clic en una estrella
+      star.addEventListener("click", () => {
+        const val = parseInt(star.getAttribute("data-value") || "0", 10);
+        localStorage.setItem(storageKey, val.toString());
+        updateStars(val);
+        if (feedback) feedback.textContent = `Puntuado: ${val}/5`;
+      });
+
+      // Efecto hover (marcar estrellas al pasar el ratón)
+      star.addEventListener("mouseenter", () => {
+        const val = parseInt(star.getAttribute("data-value") || "0", 10);
+        highlightStars(val);
+      });
+    });
+
+    // Al quitar el ratón, volver al estado guardado en localStorage
+    const starsBox = container.querySelector(".stars");
+    starsBox?.addEventListener("mouseleave", () => {
+      const currentRating = localStorage.getItem(storageKey);
+      updateStars(currentRating ? parseInt(currentRating, 10) : 0);
+    });
+
+    function highlightStars(count: number) {
+      stars.forEach((s) => {
+        const sVal = parseInt(s.getAttribute("data-value") || "0", 10);
+        if (sVal <= count) {
+          s.classList.add("active");
+        } else {
+          s.classList.remove("active");
+        }
+      });
+    }
+
+    function updateStars(rating: number) {
+      highlightStars(rating);
+    }
+  });
+</script>
+
+<style>
+  .rating-container {
+    margin: 2.5rem 0;
+    padding: 1.25rem;
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .rating-title {
+    margin: 0;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #334155;
+  }
+
+  .stars {
+    display: flex;
+    gap: 0.25rem;
+  }
+
+  .star {
+    background: none;
+    border: none;
+    font-size: 2rem;
+    color: #cbd5e1;
+    cursor: pointer;
+    transition:
+      color 0.15s ease,
+      transform 0.15s ease;
+    padding: 0 0.25rem;
+    line-height: 1;
+  }
+
+  .star:hover {
+    transform: scale(1.2);
+  }
+
+  .star.active {
+    color: #f59e0b;
+  }
+
+  .rating-feedback {
+    font-size: 0.85rem;
+    color: #64748b;
+    min-height: 1.25rem;
+  }
+</style>
