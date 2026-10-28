@@ -1,0 +1,24 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout>
+  <form action="" id="newsletter">
+    <label for="">Suscribete a mi newsletter</label>
+    <input type="email" id="email" />
+    <button type="submit">Suscribirme</button>
+  </form>
+</BaseLayout>
+
+<script>
+  const form = document.querySelector("#newsletter");
+  form?.addEventListener("submit", guardarEmail);
+
+  function guardarEmail(event) {
+    event.preventDefault();
+
+    //guardamos email
+    console.log("Email guardado");
+    form.reset();
+  }
+</script>
