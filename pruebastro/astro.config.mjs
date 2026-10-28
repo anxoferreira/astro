@@ -7,6 +7,8 @@ import react from "@astrojs/react";
 
 import mdx from "@astrojs/mdx";
 
+import netlify from "@astrojs/netlify";
+
 // https://astro.build/config
 export default defineConfig({
   server: {
@@ -20,4 +22,6 @@ export default defineConfig({
   },
 
   integrations: [react(), mdx()],
+  output: "static",
+  adapter: netlify(),
 });

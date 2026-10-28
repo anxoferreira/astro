@@ -1,0 +1,37 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Card from "../components/Card2.astro";
+
+const res = await fetch("https://rickandmortyapi.com/api/character");
+
+if (!res.ok) {
+  throw new Error("Fallo al conectarse al API: " + res.status);
+}
+
+const datos = await res.json();
+const personajes = datos.results;
+---
+
+<BaseLayout>
+  <h1 style="text-align: center">Personajes de Rick y Morty</h1>
+
+  <div class="grid-container">
+    {
+      personajes.map((personaje: any) => (
+        <Card title={personaje.name} img={personaje.image} />
+      ))
+    }
+  </div>
+</BaseLayout>
+
+<style>
+  body {
+    background-color: rgb(192, 220, 187);
+  }
+
+  .grid-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+</style>

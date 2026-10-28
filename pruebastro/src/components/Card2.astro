@@ -1,0 +1,69 @@
+---
+const { title, img } = Astro.props;
+---
+
+<div class="card">
+  <img src={img} alt={title} class="card-img" />
+  <div class="card-body">
+    <h3>{title}</h3>
+  </div>
+</div>
+
+<style>
+  .card {
+    background-color: #ffffff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow:
+      0 10px 25px -5px rgba(0, 0, 0, 0.05),
+      0 8px 10px -6px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    margin: 16px 0;
+    width: 100%;
+    max-width: 23%;
+  }
+
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow:
+      0 20px 30px -10px rgba(0, 0, 0, 0.08),
+      0 10px 15px -5px rgba(0, 0, 0, 0.04);
+    border-color: rgba(0, 0, 0, 0.1);
+  }
+
+  .card-img {
+    width: 100%;
+    height: 190px;
+    object-fit: cover;
+    display: block;
+    background-color: #f1f5f9;
+  }
+
+  .card-body {
+    padding: 24px;
+    text-align: left;
+  }
+
+  .card-body h3 {
+    margin: 0 0 8px 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #0f172a;
+    letter-spacing: -0.025em;
+    text-align: center;
+  }
+
+  .card-body p {
+    margin: 0 0 12px 0;
+    color: #475569;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  .card-body ul {
+    margin: 0;
+    padding-left: 20px;
+    color: #475569;
+  }
+</style>
