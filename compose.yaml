@@ -1,0 +1,7 @@
+services:
+  mysql_astro:
+    image: mysql:8.4
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD ?Falta el mysqlpassword}
+    ports:
+      - "3306:3306"
