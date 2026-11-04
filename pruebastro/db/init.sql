@@ -1,11 +1,14 @@
-CREATE TABLE productos (
+CREATE DATABASE if NOT EXISTS almacen;
+
+use almacen;
+
+CREATE TABLE if not exists productos (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(120) NOT NULL,
-    precio DECIMAL(10, 2) NOT NULL,
-    stock INT NOT NULL
+    precio DECIMAL(10, 2) not null
 );
 
-INSERT INTO
-    productos (nombre, precio, stock) value ('Teclado', 20, 25),
-    ('Ratón', 15, 35),
-    ('Monitor 144hz', 250, 40);
+insert into
+    productos (nombre, precio) value ("teclado", 20),
+    ("ratos", 15),
+    ("monitor", 250);

@@ -1,0 +1,58 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+import { getAllProducts } from "../lib/db";
+export const prerender = false;
+let error = false;
+let productos = [];
+try {
+  productos = await getAllProducts();
+} catch (error) {
+  console.error("No se pueden obtener los productos: " + error);
+  error = true;
+  Astro.response.status = 503;
+}
+---
+
+<BaseLayout>
+  <main class="max-w-4xl mx-auto px-4 py-10">
+    <h1
+      class="text-3xl font-extrabold text-slate-900 dark:text-white mb-8 tracking-tight"
+    >
+      Lista de productos guardados en BD
+    </h1>
+
+    <div
+      class="overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xl bg-white dark:bg-slate-900"
+    >
+      <table class="w-full text-left border-collapse">
+        <thead
+          class="bg-slate-900 text-slate-200 uppercase text-xs tracking-wider border-b border-slate-800"
+        >
+          <tr>
+            <th class="py-4 px-6 font-semibold">ID</th>
+            <th class="py-4 px-6 font-semibold">Nombre</th>
+            <th class="py-4 px-6 font-semibold text-right">Precio</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-100 dark:divide-slate-800 text-sm">
+          {
+            productos.map((producto) => (
+              <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors duration-150">
+                <td class="py-4 px-6 font-mono font-medium text-slate-400">
+                  #{producto.id}
+                </td>
+                <td class="py-4 px-6 font-semibold text-slate-800 dark:text-slate-100 capitalize">
+                  {producto.nombre}
+                </td>
+                <td class="py-4 px-6 text-right font-bold text-emerald-600 dark:text-emerald-400">
+                  ${producto.precio}
+                </td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+  </main>
+</BaseLayout>
