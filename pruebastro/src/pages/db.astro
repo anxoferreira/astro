@@ -7,6 +7,7 @@ let error = false;
 let productos = [];
 try {
   productos = await getAllProducts();
+  console.log(productos);
 } catch (error) {
   console.error("No se pueden obtener los productos: " + error);
   error = true;
@@ -48,6 +49,11 @@ try {
                 <td class="py-4 px-6 text-right font-bold text-emerald-600 dark:text-emerald-400">
                   ${producto.precio}
                 </td>
+                <td>
+                  <button data-id={producto.id} class="boton bg-red-200">
+                    Borrar
+                  </button>
+                </td>
               </tr>
             ))
           }
@@ -56,3 +62,15 @@ try {
     </div>
   </main>
 </BaseLayout>
+<script>
+  import { actions } from "astro:actions";
+  document.addEventListener("click", borrar);
+  async function borrar(event) {
+    if (!event.target.classList.contains("boton")) return;
+    const id_borrar = Number(event.target.dataset.id);
+    console.log("Has pulsado un boton con id: ", id_borrar);
+    const error = await actions.productDelete({ id: id_borrar });
+    if (error) console.error(error);
+    window.location.reload;
+  }
+</script>

@@ -1,17 +1,34 @@
-import { getSecret } from "astro:env/server";
 import mysql from "mysql2/promise";
+import { getSecret } from "astro:env/server";
 
-const pool = mysql.createPool({
-  host: getSecret("MYSQL_HOST"),
-  port: getSecret("MYSQL_PORT"),
-  database: getSecret("MYSQL_DATABASE"),
-  user: getSecret("MYSQL_USER"),
-  password: getSecret("MYSQL_PASSWORD"),
-});
+let pool;
 
+function getPool() {
+  pool = mysql.createPool({
+    host: getSecret("MYSQL_HOST"),
+    port: getSecret("MYSQL_PORT"),
+    database: getSecret("MYSQL_DATABASE"),
+    user: getSecret("MYSQL_USER"),
+    password: getSecret("MYSQL_PASSWORD"),
+  });
+  return pool;
+}
 export async function getAllProducts() {
-  const [productos] = await pool.query(
-    "Select id, nombre, precio from productos order by id",
+  const [productos] = await getPool().query(
+    "SELECT id, nombre, precio FROM productos ORDER BY id",
   );
+  console.log("HOLA");
   return productos;
+}
+
+export async function deleteProduct(id) {
+  await getPool().query("DELETE FROM productos WHERE id = ?", [id]);
+}
+
+export async function addProduct(nombre, precio) {
+  const [resultado] = await getPool().query("INSERT INTO productos (nombre, precio) VALUES (?, ?)", [
+    nombre,
+    precio,
+  ]);
+  return resultado;
 }
